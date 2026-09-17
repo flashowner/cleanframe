@@ -3,69 +3,76 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="在本地清理图片中的 EXIF、XMP、IPTC 等嵌入元数据，生成不带 AI 标记的副本。" />
+    <meta name="description" content="在本地清理图片中的 EXIF、XMP、IPTC、C2PA 等嵌入元数据，生成干净副本。" />
     <title>CleanFrame · 图片属性清理器</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <main class="shell">
       <header class="topbar">
-        <a class="brand" href="#top" aria-label="CleanFrame 首页">
+        <a class="brand" href="#top" aria-label="CleanFrame 首页" data-i18n-aria-label="brandAria">
           <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
           <span>CleanFrame</span>
         </a>
-        <div class="privacy-pill"><span class="status-dot"></span> 本地处理 · 不上传</div>
+        <div class="topbar-tools">
+          <div class="language-toggle" role="group" aria-label="选择语言" data-i18n-aria-label="languageLabel">
+            <button class="language-button is-active" data-language="zh" type="button" aria-pressed="true">中</button>
+            <span aria-hidden="true">/</span>
+            <button class="language-button" data-language="en" type="button" aria-pressed="false">EN</button>
+          </div>
+          <div class="privacy-pill"><span class="status-dot"></span> <span data-i18n="privacy">本地处理 · 不上传</span></div>
+        </div>
       </header>
 
       <section class="intro" id="top">
         <div class="eyebrow">METADATA RESET / 01</div>
-        <h1>让图片回到<br /><em>干净的文件状态。</em></h1>
-        <p class="intro-copy">清理图片属性中常见的 EXIF、XMP、IPTC 和生成工具写入的文本元数据，导出一个全新的副本。</p>
+        <h1><span data-i18n="headlineLine1">让图片回到</span><br /><em data-i18n="headlineLine2">干净的文件状态。</em></h1>
+        <p class="intro-copy" data-i18n="introCopy">清理图片属性中常见的 EXIF、XMP、IPTC 和生成工具写入的文本元数据，导出一个全新的副本。</p>
       </section>
 
-      <section class="workspace" aria-label="图片清理工作区">
+      <section class="workspace" aria-label="图片清理工作区" data-i18n-aria-label="workspaceLabel">
         <label class="dropzone" id="dropzone" for="file-input" tabindex="0">
           <input id="file-input" type="file" accept="image/jpeg,image/png,image/webp,image/gif" multiple />
           <span class="drop-icon" aria-hidden="true">
             <svg viewBox="0 0 32 32" fill="none"><path d="M16 21V5m0 0 6 6m-6-6-6 6M6 19v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </span>
-          <span class="drop-title">拖拽图片到这里</span>
-          <span class="drop-subtitle">或点击选择 · 支持 JPG、PNG、WebP、GIF</span>
-          <span class="drop-note">最多同时处理 20 张图片</span>
+          <span class="drop-title" data-i18n="dropTitle">拖拽图片到这里</span>
+          <span class="drop-subtitle" data-i18n="dropSubtitle">或点击选择 · 支持 JPG、PNG、WebP、GIF</span>
+          <span class="drop-note" data-i18n="dropNote">最多同时处理 20 张图片</span>
         </label>
 
         <div class="info-strip">
-          <div class="info-item"><span class="info-number">01</span><span>浏览器本地读取</span></div>
+          <div class="info-item"><span class="info-number">01</span><span data-i18n="stepRead">浏览器本地读取</span></div>
           <div class="info-line"></div>
-          <div class="info-item"><span class="info-number">02</span><span>重新编码去元数据</span></div>
+          <div class="info-item"><span class="info-number">02</span><span data-i18n="stepClean">重新编码去元数据</span></div>
           <div class="info-line"></div>
-          <div class="info-item"><span class="info-number">03</span><span>下载干净副本</span></div>
+          <div class="info-item"><span class="info-number">03</span><span data-i18n="stepDownload">下载干净副本</span></div>
         </div>
 
         <div class="queue-section" id="queue-section" hidden>
           <div class="section-heading">
-            <div><span class="section-kicker">PROCESSING QUEUE</span><h2>待处理图片</h2></div>
-            <button class="text-button" id="clear-button" type="button">清空列表</button>
+            <div><span class="section-kicker">PROCESSING QUEUE</span><h2 data-i18n="queueTitle">待处理图片</h2></div>
+            <button class="text-button" id="clear-button" type="button" data-i18n="clearList">清空列表</button>
           </div>
           <div class="file-list" id="file-list"></div>
           <div class="action-row">
             <div class="quality-control">
-              <label for="quality">JPEG 质量 <strong id="quality-value">98</strong></label>
+              <label for="quality"><span data-i18n="jpegQuality">JPEG 质量</span> <strong id="quality-value">98</strong></label>
               <input id="quality" type="range" min="80" max="100" value="98" />
             </div>
             <button class="primary-button" id="clean-button" type="button" disabled>
-              <span>清理并下载</span><span class="button-arrow">↗</span>
+              <span data-i18n="cleanDownload">清理并下载</span><span class="button-arrow">↗</span>
             </button>
           </div>
         </div>
 
         <aside class="notice-card">
           <span class="notice-icon" aria-hidden="true">i</span>
-          <p><strong>这会清理什么？</strong> EXIF、XMP、IPTC、C2PA 内容凭证（包括 PNG 的 <code>caBX</code> 分块）以及 WebP 元数据。不会改变画面内容，也不会移除画面中已经存在的可见水印。</p>
+          <p data-i18n-html="notice"><strong>这会清理什么？</strong> EXIF、XMP、IPTC、C2PA 内容凭证（包括 PNG 的 <code>caBX</code> 分块）以及 WebP 元数据。不会改变画面内容，也不会移除画面中已经存在的可见水印。</p>
         </aside>
       </section>
 
-      <footer class="footer"><span>CleanFrame / v1.0</span><span>文件始终留在你的设备上</span></footer>
+      <footer class="footer"><span>CleanFrame / v1.0</span><span data-i18n="footerPrivacy">文件始终留在你的设备上</span></footer>
     </main>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <script src="app.js"></script>

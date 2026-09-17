@@ -12,6 +12,10 @@ python -m http.server 4173
 
 然后打开 <http://localhost:4173>。
 
+## 中英文切换
+
+页面右上角提供 `中 / EN` 切换。首次打开时会根据浏览器语言自动选择中文或英文，手动选择会保存在当前浏览器中。
+
 ## 它能处理什么
 
 工具通过浏览器 Canvas 重新编码图片，从而移除常见的 EXIF、XMP、IPTC、C2PA Content Credentials（包括 PNG 的 `caBX` 分块）、PNG 文本块和 WebP 元数据。支持 JPG、PNG、WebP、GIF（GIF 会导出为 JPG，动画 GIF 不保留动画）。JPEG 可以调整导出质量。
